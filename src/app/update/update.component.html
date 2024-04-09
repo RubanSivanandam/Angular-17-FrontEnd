@@ -1,0 +1,30 @@
+<div class="container mx-auto mt-10">
+    <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">ID:</label>
+            <input class="border border-gray-300 p-2 w-full rounded-md" type="text" [(ngModel)]="userInput.id" readonly>
+        </div>
+        <!-- Include the new ID input field here -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
+            <input class="border border-gray-300 p-2 w-full rounded-md" type="text" [(ngModel)]="userInput.username" [disabled]="isEditing">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Designation:</label>
+            <input class="border border-gray-300 p-2 w-full rounded-md" type="text" [(ngModel)]="userInput.designation" [disabled]="isEditing">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+            <input class="border border-gray-300 p-2 w-full rounded-md" type="email" [(ngModel)]="userInput.email" [disabled]="isEditing">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+            <input class="border border-gray-300 p-2 w-full rounded-md" type="password" [(ngModel)]="userInput.password" readonly>
+        </div>
+        <div  class="flex justify-between">
+            <button class="bg-blue-500 text-white py-2 px-4 rounded" (click)="saveUserData()">Save</button>
+            <button class="bg-gray-500 text-white py-2 px-4 rounded" (click)="cancelEdit()">Cancel</button>
+        </div>
+        
+    </div>
+</div>
