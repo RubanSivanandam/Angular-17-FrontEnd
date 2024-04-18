@@ -9,11 +9,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { EmployeeListComponent } from './employeelist/employeelist.component';
 import { UpdateComponent } from './update/update.component';
+import { ToastrModule } from 'ngx-toastr';
+import { RegisterComponent } from './register/register.component';
+
 
 const routes: Routes = [
+  { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginformComponent },
-  { path: 'login/employees', component: EmployeeListComponent },
-  { path: 'login/employees/update/:id', component: UpdateComponent },
+  { path: 'table', component: EmployeeListComponent },
+  { path: 'update/:id', component: UpdateComponent },
 ];
 
 @NgModule({
@@ -22,6 +26,8 @@ const routes: Routes = [
     LoginformComponent,
     EmployeeListComponent,
     UpdateComponent,
+    RegisterComponent,
+
   
   ],
   imports: [
@@ -31,7 +37,10 @@ const routes: Routes = [
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot(routes), 
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
+
   ],
   providers: [],
   bootstrap: [AppComponent]

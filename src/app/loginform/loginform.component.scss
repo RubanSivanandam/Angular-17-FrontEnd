@@ -6,3 +6,10 @@
   box-shadow: 0 0 20px 2.5px #8a6fff; /* Adjust the color and size as needed */
 }
 
+.close-btn {
+  position:relative;
+  text-align:top-right;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}

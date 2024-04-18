@@ -3,12 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginformComponent } from '../app/loginform/loginform.component';
 import { EmployeeListComponent } from './employeelist/employeelist.component';
 import { UpdateComponent } from './update/update.component';
-
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
+  { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginformComponent },
-  { path: 'login/employees', component: EmployeeListComponent },
-  { path: 'login/employees/update/:id', component: UpdateComponent },
+  { path: 'table', component: EmployeeListComponent },
+  { path: 'update/:id', component: UpdateComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
  
 ];
