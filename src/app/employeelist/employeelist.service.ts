@@ -44,6 +44,7 @@ export class DataService {
   editEmployee(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/find/${id}`,{ headers: this.createHeaders()});
   }
-  saveUserData(userData: any) {
-    return this.http.get<any>(`${this.apiUrl}/register`,userData);
+  saveUserData(id: string, payload: any) {
+    return this.http.put<any>(`${this.apiUrl}/update/${id}`,payload,{ headers: this.createHeaders()})
+  }
 }

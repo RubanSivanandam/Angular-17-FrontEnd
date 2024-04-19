@@ -1,12 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from './employeelist.service';
+import { ToastrService } from 'ngx-toastr';
+import { response } from 'express';
+import { HttpErrorResponse } from '@angular/common/http';
 
+
+interface ErrorResponse {
+  message?:string;
+  error?:string;
+}
 @Component({
   selector: 'app-employeelist',
   templateUrl: './employeelist.component.html',
   styleUrls: ['./employeelist.component.scss']
 })
+
+
 export class EmployeeListComponent implements OnInit {
   employees: any[] = [];
   isEditing = false;
@@ -14,7 +24,7 @@ export class EmployeeListComponent implements OnInit {
   editedEmail = '';
   editedDesignation = '';
   
-  constructor(private router: Router, private dataService: DataService) { }
+  constructor(private router: Router, private dataService: DataService ,private toastr: ToastrService) { }
 
   ngOnInit(): void {
     // Check if the token is already stored in local storage
@@ -37,44 +47,52 @@ export class EmployeeListComponent implements OnInit {
 
   deleteEmployee(id: string) {
     if (confirm('Are you sure you want to delete this employee?')) {
-      this.dataService.deleteEmployee(id).subscribe(() => {
-        this.employees = this.employees.filter(employee => employee.id !== id);
-        this.router.navigate(['/table']);
+      this.dataService.deleteEmployee(id).subscribe({
+        next: (response: any) => {
+          // Success response
+          this.toastr.success(response.message || 'Success', 'Success');
+          this.employees = this.employees.filter(employee => employee.id !== id);
+          this.router.navigate(['/table']);
+        },
+        error: (error: HttpErrorResponse) => {
+          const errorResponse = error.error as ErrorResponse;
+          this.toastr.error(errorResponse.message || 'An error occurred', 'Error');
+        }
       });
     }
   }
 
   editEmployee(employee: any) {
-    
+    // Set isEditing to true
     this.isEditing = true;
-    // Store the original values in variables for editing
+    // Set the original values for editing
     this.editedUsername = employee.username;
     this.editedEmail = employee.email;
     this.editedDesignation = employee.designation;
-
   }
+  
+
   saveUserData(employee: any) {
-    // Save the edited values to the employee object
-    employee.username = this.editedUsername;
-    employee.email = this.editedEmail;
-    employee.designation = this.editedDesignation;
-    // Call your service method to save the data
-    this.dataService.saveUserData(employee).subscribe({
+    const id = employee.id;
+    this.dataService.saveUserData(id, employee).subscribe({
       next: (response: any) => {
-        console.log('Data saved successfully:', response);
+        // Success response
+        this.toastr.success(response.message || 'Data saved successfully', 'Success');
         this.isEditing = false; // Exit edit mode after saving
       },
-      error: (error: any) => {
-        console.error('Error saving data:', error);
+      error: (error: HttpErrorResponse) => {
+        const errorResponse = error.error as ErrorResponse;
+        this.toastr.error(errorResponse.message || 'An error occurred', 'Error');
       }
     });
   }
-
-  goBack(){
+  
+  Logout() {
+    localStorage.clear()
     this.router.navigate(['/login']);
   }
 
-  addEmployee(){
+  addEmployee() {
     this.router.navigate(['/register']);
   }
 }

@@ -1,5 +1,5 @@
 <div class="flex justify-between mb-4">
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="goBack()">Back</button>
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="Logout()">Logout</button>
     <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" (click)="addEmployee()">Add Employee</button>
 </div>
 
@@ -19,28 +19,16 @@
             <tr *ngFor="let employee of employees" class="border">
                 <td class="border px-4 py-2">{{ employee.id }}</td>
                 <td class="border px-4 py-2">
-                    <ng-container *ngIf="!isEditing; else editMode">
-                        {{ employee.username }}
-                    </ng-container>
-                    <ng-template #editMode>
-                        <input type="text" [(ngModel)]="editedUsername" />
-                    </ng-template>
+                  <input *ngIf="isEditing" type="text" [(ngModel)]="employee.username" />
+                  <ng-container *ngIf="!isEditing">{{ employee.username }}</ng-container>
                 </td>
                 <td class="border px-4 py-2">
-                    <ng-container *ngIf="!isEditing; else editMode">
-                        {{ employee.email }}
-                    </ng-container>
-                    <ng-template #editMode>
-                        <input type="text" [(ngModel)]="editedEmail" />
-                    </ng-template>
+                  <input *ngIf="isEditing" type="text" [(ngModel)]="employee.email" />
+                  <ng-container *ngIf="!isEditing">{{ employee.email }}</ng-container>
                 </td>
                 <td class="border px-4 py-2">
-                    <ng-container *ngIf="!isEditing; else editMode">
-                        {{ employee.designation }}
-                    </ng-container>
-                    <ng-template #editMode>
-                        <input type="text" [(ngModel)]="editedDesignation" />
-                    </ng-template>
+                  <input *ngIf="isEditing" type="text" [(ngModel)]="employee.designation" />
+                  <ng-container *ngIf="!isEditing">{{ employee.designation }}</ng-container>
                 </td>
                 <td class="border px-4 py-2">{{employee.password}}</td>
                 <td class="border px-4 py-2">
