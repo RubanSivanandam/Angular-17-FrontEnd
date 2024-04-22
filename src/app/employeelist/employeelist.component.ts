@@ -50,7 +50,7 @@ export class EmployeeListComponent implements OnInit {
       this.dataService.deleteEmployee(id).subscribe({
         next: (response: any) => {
           // Success response
-          this.toastr.success(response.message || 'Success', 'Success');
+          this.toastr.success(response.message || 'Employee Deleted Successfully', 'Success');
           this.employees = this.employees.filter(employee => employee.id !== id);
           this.router.navigate(['/table']);
         },
